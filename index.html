@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='UTF-8'>
+	
+	<title>Rotating Blocks</title>
+	
+	<link rel='stylesheet' href='css/style.css'>
+	
+	<style>
+		#rotator { width: 920px; height: 280px; position: relative; background: white; padding: 20px; }
+		#block-1 { background: #d5fcff; }
+		#block-2 { background: #e1ffd5; }
+		#block-3 { background: #ffffd8; }
+		#rotator > div { 
+			position: absolute; 
+			overflow: hidden;
+			-webkit-transition: all 0.5s ease;
+			-moz-transition: all 0.5s ease;
+			-o-transition: all 0.5s ease;
+		}
+		#rotator > div > div { 
+			padding: 20px; 
+		}
+		#rotator > div > div img {
+			float: right;
+			margin: 0 0 2px 10px;
+		}
+		#rotator .active { top: 20px; left: 20px; width: 580px; height: 280px; }
+		#rotator .non-active-top { top: 20px; left: 620px; height: 130px; width: 320px; }
+		#rotator .non-active-bottom { top: 170px; left: 620px; height: 130px; width: 320px; }		
+		#rotator .non-active-top:hover, #rotator .non-active-bottom:hover { 
+			cursor: pointer;
+			-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.4); 
+			-moz-box-shadow: 0 0 10px rgba(0,0,0,0.4); 
+			box-shadow: 0 0 10px rgba(0,0,0,0.4); 
+		}
+		#rotator h2 {
+			text-align: center; 
+			line-height: 130px;
+		}
+		#rotator .active h2 {
+			display: none;
+		}
+	</style>
+	
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+	
+	<!-- 
+		Thought of using jQuery UI's .addClass transitions as fallback (or primary) but doesn't work as well
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script> 
+	-->
+	
+	<script>
+		// DOM Ready
+		$(function() {
+		
+			var current;
+					
+			function rotate() {
+			
+				// This seems like a sucky way to do it, but you can't select by classes because they execute in order
+							
+				if (current == 1) {
+					$("#block-1").removeClass().addClass("active");
+					$("#block-2").removeClass().addClass("non-active-top");
+					$("#block-3").removeClass().addClass("non-active-bottom");
+				} else if (current == 2) {
+					$("#block-1").removeClass().addClass("non-active-bottom");
+					$("#block-2").removeClass().addClass("active");
+					$("#block-3").removeClass().addClass("non-active-top");
+				} else {
+					$("#block-1").removeClass().addClass("non-active-top");
+					$("#block-2").removeClass().addClass("non-active-bottom");
+					$("#block-3").removeClass().addClass("active");
+				}
+			
+			}
+			
+			$("#rotator div").click(function() {
+			
+				// Enables reversing, idea via Andrea Canton: https://twitter.com/andreacanton/status/24954634279849985
+				current = this.id.substr(6);			
+				rotate();
+			
+			});
+		
+		});
+	</script>
+</head>
+
+<body>
+
+	<div id="page-wrap">
+	
+	<h1>Rotating Blocks</h1>
+	
+	<p>Click on the smaller blocks on right to rotate. Browsers that support transitions will unleash radness, otherwise, hey, it still works.</p>
+	
+		<div id="rotator">
+		
+			<div id="block-1" class="active">
+				<h2>Subtitle #1</h1>
+				<div>
+					<h1>Seven Space Frogs Descend On Canada's Largest City</h1>
+					<img src="spacefrog.jpg" alt="space frog">
+					<p>Commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+				</div>
+			</div>
+			
+			<div id="block-2" class="non-active-top">
+				<h2>Subtitle #2</h2>
+				<div>
+					<h1>The Power of the Voodoo. Who do? You do.</h1>
+					<img src="goblins.jpg" alt="goblins">
+					<p>Ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+				</div>			
+			</div>
+			
+			<div id="block-3" class="non-active-bottom">
+				<h2>Subtitle #3</h2>
+				<div>
+					<h1>You May Find Yourself Living in a Shotgun Shack</h1>
+					<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+				</div>			
+			</div>
+		
+		</div>
+	
+	</div>
+	
+</body>
+
+</html>
